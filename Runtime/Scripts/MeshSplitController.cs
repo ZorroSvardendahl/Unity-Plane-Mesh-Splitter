@@ -118,7 +118,9 @@ namespace MeshSplit.Scripts
                 newMeshRenderer.sortingLayerID = _baseRenderer.sortingLayerID;
                 newMeshRenderer.shadowCastingMode = _baseRenderer.shadowCastingMode;
                 newMeshRenderer.receiveShadows = _baseRenderer.receiveShadows;
+#if UNITY_EDITOR
                 newMeshRenderer.receiveGI = _baseRenderer.receiveGI;
+#endif
                 newMeshRenderer.lightProbeUsage = _baseRenderer.lightProbeUsage;
                 newMeshRenderer.rayTracingMode = _baseRenderer.rayTracingMode;
                 newMeshRenderer.reflectionProbeUsage = _baseRenderer.reflectionProbeUsage;
