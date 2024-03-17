@@ -1,6 +1,6 @@
 {
   "name": "com.artnas.meshsplit",
-  "displayName": "Mesh Split",
+  "displayName": "Mesh Split (Zorro's Fork)",
   "author": {
     "name": "Artur Nasiadko",
     "email": "Art.Nasiadko@gmail.com",
@@ -9,7 +9,7 @@
   "version": "1.3.1",
   "unity": "2021.2",
   "hideInEditor": false,
-  "description": "Split meshes into chunks of a given size",
+  "description": "Split meshes into chunks of a given size, forked by Zorro to fix bugs with prefabs",
   "documentationUrl": "https://github.com/artnas/Unity-Plane-Mesh-Splitter",
   "dependencies": {
     "com.unity.burst": "1.5.1",

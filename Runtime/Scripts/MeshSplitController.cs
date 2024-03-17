@@ -28,9 +28,7 @@ namespace MeshSplit.Scripts
         private Mesh _baseMesh;
         private MeshRenderer _baseRenderer;
 
-        // generated children are kept here, so the script knows what to delete on Split() or Clear()
-        [HideInInspector] [SerializeField]
-        private List<GameObject> Children = new List<GameObject>();
+        private List<GameObject> m_children = new List<GameObject>();
 
         public void Split()
         {
@@ -136,7 +134,7 @@ namespace MeshSplit.Scripts
                 meshCollider.sharedMesh = mesh;
             }
             
-            Children.Add(newGameObject);
+            m_children.Add(newGameObject);
         }
 
         private int GetUsedAxisCount()
@@ -159,32 +157,39 @@ namespace MeshSplit.Scripts
         {
             // find child submeshes which are not in child list
             var childCount = transform.childCount;
-            if (childCount != Children.Count)
+
+            if (m_children.Any((o => o == null)))
+            {
+                m_children.Clear();
+            }
+
+            if (childCount != m_children.Count)
             {
                 var unassignedSubMeshes = GetComponentsInChildren<MeshRenderer>()
-                    .Where(child => child.name.Contains("SubMesh") && !Children.Contains(child.gameObject));
+                    .Where(child => child.name.Contains("SubMesh") && !m_children.Contains(child.gameObject));
 
                 var count = 0;
 
                 foreach (var subMesh in unassignedSubMeshes)
                 {
-                    Children.Add(subMesh.gameObject);
+                    m_children.Add(subMesh.gameObject);
                     count++;
                 }
                 
                 if (Verbose) Debug.Log($"found {count} unassigned submeshes");
             }
+            
 
-            foreach (var t in Children)
+            foreach (var t in m_children)
             {
                 // destroy mesh
                 DestroyImmediate(t.GetComponent<MeshFilter>().sharedMesh);
                 DestroyImmediate(t);
             }
             
-            if (Verbose) Debug.Log($"destroyed {Children.Count} submeshes");
+            if (Verbose) Debug.Log($"destroyed {m_children.Count} submeshes");
 
-            Children.Clear();
+            m_children.Clear();
         }
 
         private void OnDrawGizmosSelected()
